@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitation : Les 18 Ans de Celia</title>
+  <meta name="description" content="Invitation interactive pour célébrer les 18 ans de Celia.">
+
+  <!-- Google Fonts: Typographie d'art & éditoriale (Cormorant Garamond, Cinzel, Alex Brush, Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="white-gold">
+  <!-- SVG Filters pour texture de papier vergé et dorure artisanale -->
+  <svg class="svg-filters" aria-hidden="true">
+    <defs>
+      <filter id="paper-texture">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise" />
+        <feDiffuseLighting in="noise" lighting-color="#ffffff" surfaceScale="1.2" result="light">
+          <feDistantLight azimuth="60" elevation="50" />
+        </feDiffuseLighting>
+        <feBlend mode="multiply" in="SourceGraphic" in2="light" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Surface de table lumineuse & lin nacré mat -->
+  <div class="table-surface"></div>
+
+  <!-- Barre d'actions supérieure : sobre, épurée et sans aucun effet glassmorphism -->
+  <header class="top-nav" id="top-nav">
+    <div class="nav-left">
+      <div class="paper-badge">
+        <span class="badge-icon">✉️</span>
+        <span class="badge-text">Invitation Personnelle</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="tactile-btn" id="sound-toggle-btn" title="Activer / Désactiver les effets sonores"
+        aria-label="Contrôle du son">
+        <span class="btn-icon sound-icon">🔊</span>
+        <span class="btn-label">Son</span>
+      </button>
+      <button class="tactile-btn" id="replay-btn" title="Rejouer l'ouverture de l'enveloppe"
+        aria-label="Rejouer l'ouverture">
+        <span class="btn-icon">↺</span>
+        <span class="btn-label">Refermer</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Zone Principale : Scène Tactile -->
+  <main class="main-scene" id="main-scene">
+
+    <!-- PHASE 1 : Cérémonie d'ouverture de l'Enveloppe 3D -->
+    <div class="envelope-stage" id="envelope-stage">
+      <div class="opening-hint" id="opening-hint">
+        <span class="hint-dot"></span>
+        <p>Touchez le sceau pour desceller votre invitation</p>
+      </div>
+
+      <div class="envelope-wrapper" id="envelope-wrapper">
+        <div class="envelope" id="envelope">
+
+          <!-- Doublure intérieure décorative (Liner blanc & or) -->
+          <div class="envelope-liner">
+            <div class="liner-pattern liner-botanical"></div>
+          </div>
+
+          <!-- Dos de l'enveloppe -->
+          <div class="envelope-back"></div>
+
+          <!-- Rabat Supérieur 3D avec Cachet de Cire -->
+          <div class="envelope-flap" id="envelope-flap">
+            <div class="flap-triangle">
+              <div class="flap-liner-inner"></div>
+            </div>
+
+            <!-- Cachet de cire scellé en or royal -->
+            <div class="wax-seal" id="wax-seal" role="button" tabindex="0"
+              aria-label="Briser le sceau et ouvrir l'invitation">
+              <div class="wax-seal-base">
+                <div class="seal-ring"></div>
+                <div class="seal-emboss">
+                  <span class="seal-monogram">18</span>
+                </div>
+                <div class="seal-glint"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Face avant de l'enveloppe avec Calligraphie -->
+          <div class="envelope-front">
+            <!-- Calligraphie du destinataire -->
+            <div class="envelope-address">
+              <span class="address-title">À l'attention de</span>
+              <p class="address-name">Nos Chers Amis & Famille</p>
+              <div class="address-underline"></div>
+            </div>
+          </div>
+
+          <!-- Aperçu du carton glissé dans l'enveloppe -->
+          <div class="envelope-card-preview" id="envelope-card-preview">
+            <div class="card-peek-header">
+              <span class="peek-ornament">✦</span>
+              <span class="peek-title">Celia</span>
+              <span class="peek-ornament">✦</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 : Carton d'Invitation Déplié -->
+    <div class="card-stage hidden" id="card-stage">
+
+      <div class="card-presentation-container">
+
+        <!-- Badge discret compte à rebours -->
+        <div class="card-header-badge-wrap">
+          <span class="badge-time" id="countdown-badge">J - 00</span>
+        </div>
+
+        <!-- Le Carton d'Invitation Simple Face -->
+        <div class="card-single-wrapper" id="card-single-wrapper">
+          <div class="invitation-card" id="invitation-card">
+
+            <div class="card-face card-recto">
+              <div class="card-border-frame">
+                <div class="card-inner-frame">
+
+                  <!-- Ornement supérieur -->
+                  <div class="card-header-ornament">
+                    <div class="ornament-line"></div>
+                    <div class="ornament-symbol">✦ ❦ ✦</div>
+                    <div class="ornament-line"></div>
+                  </div>
+
+                  <div class="card-subtitle-small">VOUS ÊTES CHALEUREUSEMENT CONVIÉ(E) À CÉLÉBRER LES</div>
+
+                  <!-- Titre / Âge -->
+                  <div class="card-milestone">
+                    <span class="milestone-number">18</span>
+                    <span class="milestone-text">Ans</span>
+                  </div>
+
+                  <!-- Prénom en dorure artisanale -->
+                  <h1 class="card-name-title">
+                    <span class="title-preposition">de</span>
+                    <span class="gold-foil-text">Celia</span>
+                  </h1>
+
+                  <p class="card-invitation-message">
+                    Pour célébrer ma majorité et marquer cette nouvelle étape, retrouvons-nous pour une soirée inoubliable mêlant rires, douceurs, champagne et danse jusqu'au bout de la nuit.
+                  </p>
+
+                  <div class="card-details-divider">
+                    <span>✦</span>
+                  </div>
+
+                  <!-- Date & Heure & Lieu -->
+                  <div class="card-key-details">
+                    <div class="detail-block">
+                      <span class="detail-icon">📅</span>
+                      <span class="detail-label">DATE</span>
+                      <strong class="detail-val">Samedi 13 Février 2027</strong>
+                    </div>
+                    <div class="detail-separator"></div>
+                    <div class="detail-block">
+                      <span class="detail-icon">⏰</span>
+                      <span class="detail-label">HORAIRE</span>
+                      <strong class="detail-val">À partir de 19h30</strong>
+                    </div>
+                  </div>
+
+                  <div class="card-location-badge">
+                    <span class="location-pin">📍</span>
+                    <div class="location-info">
+                      <span class="location-address">44 Rue Clovis Joos, 62880 Pont-à-Vendin</span>
+                    </div>
+                  </div>
+
+                  <!-- Bouton d'action principal -->
+                  <div class="card-cta-group">
+                    <button class="primary-card-action" id="card-rsvp-btn">
+                      <span class="btn-sparkle">✦</span>
+                      <span>Confirmer ma Présence par Message</span>
+                      <span class="btn-sparkle">✦</span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- MODULES INTERACTIFS DE LA PAGE (PAPETERIE TACTILE BLANCHE & DORÉE) -->
+        <section class="interactive-dock" id="interactive-dock">
+
+          <!-- Carte 1 : Compte à Rebours Live -->
+          <div class="dock-paper-card countdown-card">
+            <div class="dock-card-header">
+              <span class="dock-icon">⏳</span>
+              <h3>Compte à Rebours</h3>
+            </div>
+            <div class="countdown-grid" id="countdown-grid">
+              <div class="time-unit">
+                <span class="unit-val" id="cd-days">00</span>
+                <span class="unit-name">Jours</span>
+              </div>
+              <div class="time-sep">:</div>
+              <div class="time-unit">
+                <span class="unit-val" id="cd-hours">00</span>
+                <span class="unit-name">Heures</span>
+              </div>
+              <div class="time-sep">:</div>
+              <div class="time-unit">
+                <span class="unit-val" id="cd-mins">00</span>
+                <span class="unit-name">Min</span>
+              </div>
+              <div class="time-sep">:</div>
+              <div class="time-unit">
+                <span class="unit-val" id="cd-secs">00</span>
+                <span class="unit-name">Sec</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 2 : Calendrier Rapide -->
+          <div class="dock-paper-card calendar-card">
+            <div class="dock-card-header">
+              <span class="dock-icon">🗓️</span>
+              <h3>Ajouter à l'Agenda</h3>
+            </div>
+            <p class="dock-card-desc">Enregistrez la date en un clic dans votre application de calendrier :</p>
+            <div class="calendar-btn-group">
+              <button class="paper-action-btn" id="google-cal-btn">
+                <span class="cal-logo">G</span>
+                <span>Google Agenda</span>
+              </button>
+              <button class="paper-action-btn" id="ics-cal-btn">
+                <span class="cal-logo"></span>
+                <span>Apple / Outlook (.ics)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Carte 3 : Itinéraire & Carte -->
+          <div class="dock-paper-card map-card">
+            <div class="dock-card-header">
+              <span class="dock-icon">🧭</span>
+              <h3>Plan & Accès</h3>
+            </div>
+            <p class="dock-card-desc">44 Rue Clovis Joos, 62880 Pont-à-Vendin</p>
+            <div class="map-actions">
+              <button class="paper-action-btn" id="copy-address-btn">
+                <span id="copy-text-feedback">📋 Copier l'adresse</span>
+              </button>
+              <a href="https://maps.google.com/?q=44+Rue+Clovis+Joos+62880+Pont-à-Vendin" target="_blank"
+                rel="noopener noreferrer" class="paper-action-btn primary-paper-btn">
+                <span>Ouvrir dans Maps ↗</span>
+              </a>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- LIVRE D'OR / MUR DE MOTS INTERACTIF -->
+        <section class="guestbook-section" id="guestbook-section">
+          <div class="section-title-wrap">
+            <span class="section-ornament">✦</span>
+            <h2>Mur de Mots & Vœux</h2>
+            <p>Glissez un mot doux ou une anecdote pour Celia !</p>
+          </div>
+
+          <!-- Formulaire épuré de dépôt d'un mot -->
+          <div class="guestbook-paper-card">
+            <input type="text" id="gb-author" placeholder="Votre prénom ou surnom" class="paper-input">
+            <textarea id="gb-message" placeholder="Votre message complice ou souvenir..." class="paper-textarea"
+              rows="2"></textarea>
+            <button class="paper-submit-btn" id="gb-submit-btn">
+              <span>Glisser mon mot dans la boîte secrète</span>
+              <span class="btn-icon">💌</span>
+            </button>
+          </div>
+
+          <!-- Zone protégée / Espace de consultation réservé à l'hôte -->
+          <div class="guestbook-private-container" id="guestbook-private-container">
+
+            <!-- Écran verrouillé par défaut pour les invités -->
+            <div class="private-lock-view" id="private-lock-view">
+              <div class="lock-icon-wrap">🔒</div>
+              <h3>Boîte à Souvenirs de Celia</h3>
+              <p class="lock-desc">Tous les mots doux sont soigneusement scellés. Cet espace de lecture est réservé à
+                Celia le jour de son anniversaire.</p>
+              <button class="unlock-btn" id="unlock-trigger-btn">
+                <span>🔑 Espace réservé à Celia (Déverrouiller)</span>
+              </button>
+            </div>
+
+            <!-- Dialogue de saisie du code PIN -->
+            <div class="pin-entry-modal hidden" id="pin-entry-modal">
+              <div class="pin-card">
+                <h4>Entrez votre code secret</h4>
+                <p>Code confidentiel de Celia pour lire tous les mots reçus :</p>
+                <div class="pin-input-group">
+                  <input type="password" id="pin-input" maxlength="6" placeholder="ex: 2027" class="pin-field">
+                  <button class="pin-submit-btn" id="pin-submit-btn">Ouvrir 🔓</button>
+                </div>
+                <button class="pin-cancel-btn" id="pin-cancel-btn">Annuler</button>
+              </div>
+            </div>
+
+            <!-- Mur déverrouillé (visible uniquement par l'hôte après mot de passe) -->
+            <div class="guestbook-unlocked-view hidden" id="guestbook-unlocked-view">
+              <div class="unlocked-header">
+                <span class="unlocked-badge">✨ Boîte à Souvenirs Déverrouillée</span>
+                <p>Voici tous les messages déposés par vos proches :</p>
+              </div>
+              <div class="guestbook-grid" id="guestbook-grid">
+                <!-- Rempli dynamiquement en JS -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL / CARNET DE CONFIRMATION PAR MESSAGE (RSVP DIRECT) -->
+  <div class="modal-overlay" id="message-rsvp-modal" aria-hidden="true" role="dialog" aria-labelledby="msg-rsvp-title">
+    <div class="paper-modal-card">
+      <button class="modal-close-btn" id="msg-rsvp-close-btn" aria-label="Fermer la fenêtre">✕</button>
+
+      <div class="modal-header">
+        <span class="modal-seal-badge">R.S.V.P.</span>
+        <h2 id="msg-rsvp-title">Confirmer par Message</h2>
+        <p class="modal-desc">Un clic pour préparer votre message personnalisé destiné à Celia.</p>
+      </div>
+
+      <div class="msg-composer">
+        <div class="form-group">
+          <label for="guest-name-input" class="form-label">Votre Prénom / Nom :</label>
+          <input type="text" id="guest-name-input" class="paper-input" placeholder="ex: Julien & Camille">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Votre Réponse :</label>
+          <div class="status-selector">
+            <button type="button" class="status-opt active" data-status="yes">
+              <span class="opt-emoji">🥂</span>
+              <strong>Je viens avec plaisir !</strong>
+            </button>
+            <button type="button" class="status-opt" data-status="no">
+              <span class="opt-emoji">💌</span>
+              <strong>Je ne pourrai pas</strong>
+            </button>
+          </div>
+        </div>
+
+        <!-- Aperçu du message qui sera envoyé -->
+        <div class="form-group">
+          <label class="form-label">Aperçu du message à envoyer :</label>
+          <div class="message-preview-box" id="message-preview-box">
+            "Coucou Celia ! C'est [Prénom], je te confirme avec grand plaisir ma présence pour célébrer tes 18 ans
+            le 13 février ! 🥂✨"
+          </div>
+        </div>
+
+        <!-- Choix du canal d'envoi -->
+        <div class="send-options-grid">
+          <button class="send-channel-btn sms-btn" id="send-sms-btn">
+            <span class="channel-icon">💬</span>
+            <div class="channel-text">
+              <strong>Envoyer par SMS</strong>
+              <small>Ouvre votre application Messages</small>
+            </div>
+          </button>
+
+          <button class="send-channel-btn whatsapp-btn" id="send-wa-btn">
+            <span class="channel-icon">🟢</span>
+            <div class="channel-text">
+              <strong>Envoyer sur WhatsApp</strong>
+              <small>Ouvre votre discussion</small>
+            </div>
+          </button>
+        </div>
+
+        <div class="copy-fallback-row">
+          <button class="copy-msg-btn" id="copy-msg-btn">
+            <span>📋 Copier le texte du message</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast-notification" id="toast-notification" role="status" aria-live="polite">
+    <span class="toast-icon">✨</span>
+    <span class="toast-message" id="toast-message">Action effectuée</span>
+  </div>
+
+  <!-- Canvas pour explosion de confettis dorés -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

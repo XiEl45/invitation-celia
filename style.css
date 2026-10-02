@@ -1,0 +1,1604 @@
+/* ==========================================================================
+   STYLE.CSS - CARTE D'INVITATION HAUT DE GAMME & TACTILE
+   DIRECTION ARTISTIQUE : BLANCHE & DORÉE LUMINEUSE (BRIGHT WHITE & GOLD LUXURY)
+   Papeterie d'Art, Coton Blanc, Marquage à Chaud Or Pur & Fond Lumineux
+   ========================================================================== */
+
+/* --- 1. VARIABLES & PALETTES DE COULEURS BLANCHE & DORÉE LUMINEUSE --- */
+:root {
+  /* Fond de Scène : Table d'exposition lumineuse en lin ivoire & albâtre avec aura dorée */
+  --bg-table: #f9f6f0;
+  --bg-surface: #fdfbf7;
+  
+  /* Enveloppe en Coton Blanc Pur avec Finition Haute Papeterie */
+  --envelope-outer: #ffffff;
+  --envelope-inner: #fdfbf7;
+  --envelope-shadow: rgba(180, 140, 60, 0.22);
+  
+  /* Doublure intérieure (Liner) : Blanc nacré et motifs géométriques / floraux dorés */
+  --liner-bg: #ffffff;
+  --liner-accent: #d4af37;
+  
+  /* Cachet de Cire : Sceau en Or Royal Métallisé */
+  --wax-color: #c99a2c;
+  --wax-dark: #825d10;
+  --wax-gold: #fdedb9;
+  
+  /* Carton d'Invitation : Papier Coton Vergé Blanc Chaud */
+  --paper-bg: #ffffff;
+  --paper-texture-tint: rgba(235, 225, 205, 0.35);
+  --paper-border: #e8ded0;
+  
+  /* Encres : Bronze-Charcoal Chaud & Doré Pur (Lisibilité maximale et élégance) */
+  --ink-primary: #24201b;
+  --ink-secondary: #5e5548;
+  --ink-accent: #9a731d;
+  
+  /* Dorure à Chaud (Gold Foil) */
+  --gold-primary: #c59b27;
+  --gold-light: #fbeec8;
+  --gold-dark: #8c6812;
+  --gold-gradient: linear-gradient(135deg, #a6791a 0%, #f7e6b5 28%, #ffd700 48%, #e0b43f 72%, #94680e 100%);
+  --gold-border: #d4af37;
+  
+  /* Typographies */
+  
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-script: 'Alex Brush', cursive;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  --card-radius: 8px;
+  --transition-smooth: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- 2. RESET & BASE --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  color: var(--ink-primary);
+  background-color: var(--bg-table);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Texture de fond : nappe lumineuse en lin ivoire avec doux dégradé d'or et texture tactile */
+.table-surface {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-surface);
+  background-image: 
+    radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.18) 0%, rgba(249, 246, 240, 0.8) 55%, var(--bg-table) 100%),
+    radial-gradient(rgba(212, 175, 55, 0.12) 1.2px, transparent 1.2px);
+  background-size: 100% 100%, 28px 28px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- 3. BARRE SUPÉRIEURE (BLANCHE & DORÉE) --- */
+.top-nav {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.paper-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  color: var(--ink-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(180, 140, 60, 0.15);
+}
+
+.paper-badge .badge-icon {
+  color: var(--gold-primary);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Boutons tactiles blancs avec liseré doré */
+.tactile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #ffffff;
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  color: var(--ink-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(180, 140, 60, 0.15);
+  transition: var(--transition-smooth);
+}
+
+.tactile-btn:hover {
+  background: #fdfaf4;
+  border-color: #ffd700;
+  color: var(--gold-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25);
+}
+
+/* --- 4. SCÈNE PRINCIPALE --- */
+.main-scene {
+  position: relative;
+  z-index: 10;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px 80px;
+}
+
+/* ==========================================================================
+   5. CÉRÉMONIE DE L'ENVELOPPE BLANCHE & DORÉE (PHASE 1)
+   ========================================================================== */
+.envelope-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 680px;
+  margin: 20px auto;
+  perspective: 1400px;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.opening-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  padding: 9px 20px;
+  background: #ffffff;
+  border: 1px solid var(--gold-border);
+  border-radius: 30px;
+  color: var(--ink-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  box-shadow: 0 6px 18px rgba(180, 140, 60, 0.18);
+}
+
+.hint-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gold-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  height: 380px;
+  filter: drop-shadow(0 25px 40px var(--envelope-shadow));
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.35s ease;
+}
+
+.envelope-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+/* L'Enveloppe en Coton Blanc Pur */
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--envelope-outer);
+  border-radius: 6px;
+  overflow: visible;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+}
+
+/* Doublure intérieure (Liner) : Blanc avec dorure florale/géométrique */
+.envelope-liner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--liner-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.liner-pattern {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+.liner-botanical {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(var(--gold-border) 1.2px, transparent 1.2px),
+    radial-gradient(var(--gold-border) 1.2px, #ffffff 1.2px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+}
+
+/* Dos de l'enveloppe */
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope-inner);
+  border-radius: 6px;
+  z-index: 0;
+}
+
+/* Aperçu du carton à l'intérieur */
+.envelope-card-preview {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 15px;
+  height: 350px;
+  background: var(--paper-bg);
+  border-radius: 6px;
+  border: 1.5px solid var(--gold-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  z-index: 2;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.card-peek-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-primary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Face avant de l'enveloppe en blanc pur */
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.envelope-front::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 290px 220px 290px;
+  border-color: transparent transparent var(--envelope-outer) transparent;
+  filter: drop-shadow(0 -4px 8px rgba(180, 140, 60, 0.08));
+}
+
+/* Calligraphie de l'adresse sur fond blanc */
+.envelope-address {
+  position: absolute;
+  left: 45px;
+  bottom: 45px;
+  z-index: 5;
+}
+
+.address-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ink-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.address-name {
+  font-family: var(--font-script);
+  font-size: 2.3rem;
+  color: var(--ink-primary);
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.address-underline {
+  width: 140px;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--gold-primary), transparent);
+  margin-top: 6px;
+}
+
+/* Rabat Supérieur 3D (Flap) */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 190px;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 6;
+}
+
+.flap-triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 190px 290px 0 290px;
+  border-color: var(--envelope-outer) transparent transparent transparent;
+  filter: drop-shadow(0 6px 14px rgba(180, 140, 60, 0.15));
+  position: relative;
+}
+
+.flap-liner-inner {
+  position: absolute;
+  top: -190px;
+  left: -290px;
+  width: 580px;
+  height: 190px;
+  background: var(--liner-bg);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  opacity: 0.85;
+}
+
+/* Cachet de Cire : Or Royal Brillant */
+.wax-seal {
+  position: absolute;
+  top: 155px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+  z-index: 10;
+  outline: none;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.wax-seal:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+}
+
+.wax-seal-base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff2b2 0%, var(--wax-color) 45%, var(--wax-dark) 100%);
+  box-shadow: 
+    inset 2px 2px 5px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 6px rgba(0, 0, 0, 0.35),
+    0 8px 18px rgba(180, 140, 60, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-ring {
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.75);
+}
+
+.seal-emboss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.seal-monogram {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(100, 70, 10, 0.8), -1px -1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.seal-glint {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 14px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  transform: rotate(-35deg);
+  filter: blur(1px);
+}
+
+.envelope.opening .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope.opening .wax-seal {
+  animation: breakSeal 0.6s forwards;
+}
+
+@keyframes breakSeal {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.2) rotate(15deg); filter: brightness(1.3); }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+}
+
+.envelope.opening .envelope-card-preview {
+  transform: translateY(-220px);
+  box-shadow: 0 20px 40px rgba(180, 140, 60, 0.25);
+}
+
+/* ==========================================================================
+   6. CARTON D'INVITATION (BLANC & DORÉ PRESTIGE)
+   ========================================================================== */
+.card-stage {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px) scale(0.96);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-stage.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.card-stage.hidden {
+  display: none;
+}
+
+.card-presentation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+}
+
+.card-header-badge-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.card-header-badge-wrap .badge-time {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  background: #ffffff;
+  border: 1.5px solid var(--gold-border);
+  padding: 8px 20px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgba(180, 140, 60, 0.15);
+}
+
+/* Le Carton Unique Blanc & Doré */
+.card-single-wrapper {
+  width: 100%;
+  max-width: 640px;
+  perspective: 1200px;
+}
+
+.invitation-card {
+  position: relative;
+  width: 100%;
+  background-color: var(--paper-bg);
+  border-radius: var(--card-radius);
+  padding: 28px;
+  box-shadow: 
+    0 25px 50px rgba(180, 140, 60, 0.22),
+    0 0 0 1px rgba(212, 175, 55, 0.35),
+    inset 0 0 40px var(--paper-texture-tint);
+  transition: transform 0.4s ease;
+}
+
+.card-face {
+  width: 100%;
+}
+
+/* Cadres & Bordures Letterpress avec Dorure à Chaud */
+.card-border-frame {
+  width: 100%;
+  border: 1px solid var(--paper-border);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.card-inner-frame {
+  width: 100%;
+  border: 1.5px solid var(--gold-primary);
+  border-radius: 4px;
+  padding: 38px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  background: #ffffff;
+}
+
+/* Ornements et Typographie */
+.card-header-ornament {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 80%;
+  margin-bottom: 8px;
+}
+
+.ornament-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.ornament-symbol {
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+}
+
+.card-subtitle-small {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.card-milestone {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin: 2px 0;
+}
+
+.milestone-number {
+  font-family: var(--font-serif);
+  font-size: 4.8rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--gold-primary);
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), -1px -1px 1px rgba(180, 140, 40, 0.2);
+}
+
+.milestone-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  letter-spacing: 0.15em;
+}
+
+.card-name-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-serif);
+  font-size: 3.4rem;
+  font-weight: 600;
+  font-style: italic;
+  margin: 2px 0 10px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.title-preposition {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--ink-secondary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Dorure à Chaud Scintillante */
+.gold-foil-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  filter: drop-shadow(0 1px 1px rgba(180, 130, 20, 0.2));
+}
+
+.card-invitation-message {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: var(--ink-primary);
+  max-width: 480px;
+  margin: 0 auto 10px;
+}
+
+.card-details-divider {
+  color: var(--gold-primary);
+  font-size: 0.85rem;
+  margin: 6px 0;
+  opacity: 0.9;
+}
+
+/* Bloc Clé de Date & Heure */
+.card-key-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 460px;
+  padding: 14px 20px;
+  background: #fdfaf4;
+  border-radius: 6px;
+  border: 1px solid var(--paper-border);
+  margin-bottom: 8px;
+}
+
+.detail-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.detail-icon {
+  font-size: 1.1rem;
+}
+
+.detail-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--gold-dark);
+}
+
+.detail-val {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.detail-separator {
+  width: 1px;
+  height: 40px;
+  background: var(--gold-border);
+  opacity: 0.4;
+}
+
+/* Lieu & Adresse */
+.card-location-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  width: 100%;
+  max-width: 460px;
+  padding: 14px 22px;
+  border-radius: 6px;
+  background: #fdfaf4;
+  border: 1px solid var(--paper-border);
+  margin-bottom: 12px;
+}
+
+.location-pin {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.location-info {
+  text-align: center;
+}
+
+.location-address {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  display: block;
+}
+
+/* Actions Principales du Carton */
+.card-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 380px;
+  margin-top: 5px;
+}
+
+/* Bouton Principal en Or Royal & Blanc */
+.primary-card-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #a6791a 0%, #c59b27 50%, #8c6812 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(197, 155, 39, 0.4);
+  transition: var(--transition-smooth);
+}
+
+.primary-card-action:hover {
+  background: linear-gradient(135deg, #b8861b 0%, #d4af37 50%, #9a7215 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.55);
+}
+
+.btn-sparkle {
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   7. MODULES D'INTERACTIONS & DOCK (BLANCS & DORÉS)
+   ========================================================================== */
+.interactive-dock {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 950px;
+  margin-top: 10px;
+}
+
+.dock-paper-card {
+  background: var(--paper-bg);
+  border: 1px solid var(--paper-border);
+  border-radius: 8px;
+  padding: 24px;
+  color: var(--ink-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(180, 140, 60, 0.15);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.dock-paper-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-border);
+  box-shadow: 0 14px 35px rgba(180, 140, 60, 0.22);
+}
+
+.dock-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dock-icon {
+  font-size: 1.3rem;
+}
+
+.dock-card-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.dock-card-desc {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+/* Compte à rebours */
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fdfaf4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  min-width: 54px;
+  border: 1px solid var(--gold-border);
+}
+
+.unit-val {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.unit-name {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-secondary);
+  font-weight: 600;
+}
+
+.time-sep {
+  font-weight: 700;
+  color: var(--gold-primary);
+  font-size: 1.2rem;
+}
+
+/* Boutons calendrier et plan */
+.calendar-btn-group, .map-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paper-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #ffffff;
+  border: 1px solid var(--paper-border);
+  border-radius: 4px;
+  color: var(--ink-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.paper-action-btn:hover {
+  background: #fdfaf4;
+  border-color: var(--gold-border);
+  color: var(--gold-dark);
+}
+
+.primary-paper-btn {
+  background: linear-gradient(135deg, #a6791a 0%, #c59b27 100%);
+  border-color: var(--gold-primary);
+  color: #ffffff;
+}
+
+.primary-paper-btn:hover {
+  background: linear-gradient(135deg, #b8861b 0%, #d4af37 100%);
+  border-color: #ffd700;
+  color: #ffffff;
+}
+
+.cal-logo {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   8. LIVRE D'OR / MUR DE MOTS PRIVÉ (BLANC & DORÉ LUMINEUX)
+   ========================================================================== */
+.guestbook-section {
+  width: 100%;
+  max-width: 950px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.section-title-wrap {
+  text-align: center;
+  color: var(--ink-primary);
+}
+
+.section-ornament {
+  color: var(--gold-primary);
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.section-title-wrap h2 {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ink-primary);
+}
+
+.section-title-wrap p {
+  color: var(--ink-secondary);
+  font-size: 0.95rem;
+}
+
+.guestbook-paper-card {
+  width: 100%;
+  background: var(--paper-bg);
+  border: 1px solid var(--paper-border);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(180, 140, 60, 0.15);
+}
+
+.paper-input, .paper-textarea {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--paper-border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.paper-input:focus, .paper-textarea:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.paper-textarea {
+  resize: vertical;
+}
+
+.paper-submit-btn {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #a6791a 0%, #c59b27 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(197, 155, 39, 0.35);
+  transition: var(--transition-smooth);
+}
+
+.paper-submit-btn:hover {
+  background: linear-gradient(135deg, #b8861b 0%, #d4af37 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 16px rgba(212, 175, 55, 0.45);
+}
+
+/* Zone Privée / Verrouillée du Livre d'Or Lumineuse */
+.guestbook-private-container {
+  width: 100%;
+  position: relative;
+}
+
+.private-lock-view {
+  background: #ffffff;
+  border: 1.5px solid var(--gold-border);
+  border-radius: 8px;
+  padding: 30px 24px;
+  text-align: center;
+  color: var(--ink-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(180, 140, 60, 0.15);
+}
+
+.lock-icon-wrap {
+  font-size: 2.2rem;
+}
+
+.private-lock-view h3 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--ink-primary);
+}
+
+.lock-desc {
+  max-width: 520px;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.unlock-btn {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: #fdfaf4;
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  color: var(--gold-dark);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.unlock-btn:hover {
+  background: var(--gold-primary);
+  color: #ffffff;
+}
+
+/* Dialogue PIN */
+.pin-entry-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.pin-entry-modal.hidden {
+  display: none;
+}
+
+.pin-card {
+  background: var(--paper-bg);
+  border: 1.5px solid var(--gold-border);
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.pin-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--ink-primary);
+}
+
+.pin-card p {
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  margin-bottom: 18px;
+}
+
+.pin-input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.pin-field {
+  flex: 1;
+  padding: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  border: 1px solid var(--paper-border);
+  border-radius: 4px;
+}
+
+.pin-submit-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #a6791a, #c59b27);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pin-cancel-btn {
+  background: none;
+  border: none;
+  color: var(--ink-secondary);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/* Mur déverrouillé */
+.guestbook-unlocked-view.hidden {
+  display: none;
+}
+
+.unlocked-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.unlocked-badge {
+  display: inline-block;
+  background: #ffffff;
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+
+.guestbook-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.gb-entry-card {
+  background: var(--paper-bg);
+  border: 1px solid var(--paper-border);
+  border-radius: 6px;
+  padding: 18px;
+  color: var(--ink-primary);
+  position: relative;
+  box-shadow: 0 4px 14px rgba(180, 140, 60, 0.12);
+}
+
+.gb-author {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 6px;
+}
+
+.gb-msg {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-primary);
+}
+
+.gb-time {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: #888;
+}
+
+/* ==========================================================================
+   9. MODAL DE CONFIRMATION PAR MESSAGE (BLANC & DORÉ)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.paper-modal-card {
+  background: var(--paper-bg);
+  border: 1.5px solid var(--gold-border);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 35px 30px;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .paper-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #fdfaf4;
+  border: 1px solid var(--paper-border);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  background: var(--gold-light);
+  color: var(--ink-primary);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.modal-seal-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  background: #fdfaf4;
+  border: 1px solid var(--gold-border);
+  padding: 4px 14px;
+  border-radius: 4px;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+.modal-header h2 {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  color: var(--ink-primary);
+  margin-bottom: 6px;
+}
+
+.modal-desc {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+}
+
+.msg-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.status-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.status-opt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1.5px solid var(--paper-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--ink-primary);
+  transition: var(--transition-smooth);
+}
+
+.status-opt.active {
+  border-color: var(--gold-primary);
+  background: #fdfaf4;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+}
+
+.opt-emoji {
+  font-size: 1.2rem;
+}
+
+.message-preview-box {
+  background: #fdfaf4;
+  border: 1px dashed var(--gold-border);
+  border-radius: 6px;
+  padding: 14px;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-primary);
+}
+
+.send-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.send-channel-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.send-channel-btn.sms-btn {
+  background: #24201b;
+  color: #ffffff;
+  border: 1px solid var(--gold-border);
+}
+
+.send-channel-btn.sms-btn:hover {
+  background: #38322b;
+  transform: translateY(-2px);
+}
+
+.send-channel-btn.whatsapp-btn {
+  background: #1b7a43;
+  color: #ffffff;
+}
+
+.send-channel-btn.whatsapp-btn:hover {
+  background: #156236;
+  transform: translateY(-2px);
+}
+
+.channel-icon {
+  font-size: 1.5rem;
+}
+
+.channel-text strong {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.channel-text small {
+  display: block;
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.copy-fallback-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.copy-msg-btn {
+  background: transparent;
+  border: 1px dashed var(--paper-border);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+}
+
+.copy-msg-btn:hover {
+  background: #fdfaf4;
+  border-color: var(--gold-border);
+  color: var(--gold-dark);
+}
+
+/* ==========================================================================
+   10. NOTIFICATION TOAST & CONFETTI CANVAS
+   ========================================================================== */
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #ffffff;
+  border: 1.5px solid var(--gold-border);
+  color: var(--ink-primary);
+  padding: 12px 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(180, 140, 60, 0.25);
+  z-index: 2000;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  opacity: 0;
+  pointer-events: none;
+  font-weight: 600;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1500;
+}
+
+/* ==========================================================================
+   11. RESPONSIVE DESIGN (MOBILE & TABLETTE)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .top-nav {
+    padding: 14px 16px;
+  }
+  
+  .paper-badge {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .tactile-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .envelope-wrapper {
+    height: 290px;
+  }
+
+  .envelope-flap {
+    height: 145px;
+  }
+
+  .flap-triangle {
+    border-width: 145px 180px 0 180px;
+  }
+
+  .flap-liner-inner {
+    top: -145px;
+    left: -180px;
+    width: 360px;
+    height: 145px;
+  }
+
+  .envelope-front::before {
+    border-width: 0 180px 160px 180px;
+  }
+
+  .wax-seal {
+    top: 120px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .address-name {
+    font-size: 1.6rem;
+  }
+
+  .envelope-address {
+    left: 20px;
+    bottom: 25px;
+  }
+
+
+  .invitation-card {
+    padding: 18px 12px;
+  }
+
+  .card-inner-frame {
+    padding: 24px 14px;
+  }
+
+  .milestone-number {
+    font-size: 3.6rem;
+  }
+
+  .card-name-title {
+    font-size: 2.5rem;
+    gap: 8px;
+  }
+
+  .title-preposition {
+    font-size: 1.05rem;
+  }
+
+  .card-invitation-message {
+    font-size: 1.05rem;
+  }
+
+  .location-address {
+    font-size: 1.1rem;
+  }
+
+  .card-key-details {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .detail-separator {
+    width: 60%;
+    height: 1px;
+  }
+
+  .interactive-dock {
+    grid-template-columns: 1fr;
+  }
+
+  .send-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
