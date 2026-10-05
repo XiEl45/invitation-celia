@@ -14,7 +14,7 @@ const EventConfig = {
   eventDate: '2027-02-13',
   eventTime: 'À partir de 19h30',
   venueAddress: '44 Rue Clovis Joos, 62880 Pont-à-Vendin',
-  dressCode: 'Élégant & Champêtre Chic',
+  dressCode: 'Blanc & Doré',
   
   // Numéro de téléphone pour les confirmations SMS & WhatsApp
   hostPhone: '+33612345678',
@@ -321,7 +321,7 @@ function initCalendarExports() {
   function getEventCalendarDetails() {
     const title = `Anniversaire ${EventConfig.hostName} (${EventConfig.age} ${EventConfig.milestoneText})`;
     const location = EventConfig.venueAddress;
-    const description = `Invitation pour célébrer les ${EventConfig.age} ans de ${EventConfig.hostName}.\nLieu: ${location}`;
+    const description = `Invitation pour célébrer les ${EventConfig.age} ans de ${EventConfig.hostName}.\nDress code: ${EventConfig.dressCode}\nLieu: ${location}`;
 
     const startDate = new Date(`${EventConfig.eventDate}T19:30:00`);
     const nextDay = new Date(startDate);
