@@ -176,8 +176,8 @@ html, body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 680px;
-  margin: 20px auto;
+  max-width: 600px;
+  margin: clamp(10px, 3vh, 30px) auto;
   perspective: 1400px;
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
@@ -186,16 +186,17 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 25px;
-  padding: 9px 20px;
+  margin-bottom: clamp(15px, 3vh, 25px);
+  padding: 8px clamp(14px, 3vw, 20px);
   background: #ffffff;
   border: 1px solid var(--gold-border);
   border-radius: 30px;
   color: var(--ink-primary);
-  font-size: 0.9rem;
+  font-size: clamp(0.78rem, 2.4vw, 0.9rem);
   font-weight: 600;
   letter-spacing: 0.03em;
   box-shadow: 0 6px 18px rgba(180, 140, 60, 0.18);
+  text-align: center;
 }
 
 .hint-dot {
@@ -204,14 +205,14 @@ html, body {
   background: var(--gold-primary);
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+  flex-shrink: 0;
 }
 
 .envelope-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 580px;
-  height: 380px;
-  filter: drop-shadow(0 25px 40px var(--envelope-shadow));
+  width: min(92vw, 560px);
+  aspect-ratio: 1.55 / 1;
+  filter: drop-shadow(0 20px 35px var(--envelope-shadow));
   cursor: pointer;
   user-select: none;
   transition: transform 0.35s ease;
@@ -227,7 +228,7 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: var(--envelope-outer);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: visible;
   border: 1px solid rgba(212, 175, 55, 0.45);
 }
@@ -235,12 +236,9 @@ html, body {
 /* Doublure intérieure (Liner) : Blanc avec dorure florale/géométrique */
 .envelope-liner {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: var(--liner-bg);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   z-index: 1;
 }
@@ -265,17 +263,17 @@ html, body {
   position: absolute;
   inset: 0;
   background-color: var(--envelope-inner);
-  border-radius: 6px;
+  border-radius: 8px;
   z-index: 0;
 }
 
 /* Aperçu du carton à l'intérieur */
 .envelope-card-preview {
   position: absolute;
-  left: 5%;
-  right: 5%;
-  top: 15px;
-  height: 350px;
+  left: 4%;
+  right: 4%;
+  top: 4%;
+  bottom: 4%;
   background: var(--paper-bg);
   border-radius: 6px;
   border: 1.5px solid var(--gold-border);
@@ -284,7 +282,7 @@ html, body {
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: flex;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: clamp(12px, 3vw, 20px);
 }
 
 .card-peek-header {
@@ -292,7 +290,7 @@ html, body {
   align-items: center;
   gap: 10px;
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
   color: var(--gold-primary);
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -304,51 +302,49 @@ html, body {
   inset: 0;
   z-index: 3;
   pointer-events: none;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .envelope-front::before {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 290px 220px 290px;
-  border-color: transparent transparent var(--envelope-outer) transparent;
+  inset: 0;
+  background: var(--envelope-outer);
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
   filter: drop-shadow(0 -4px 8px rgba(180, 140, 60, 0.08));
 }
 
 /* Calligraphie de l'adresse sur fond blanc */
 .envelope-address {
   position: absolute;
-  left: 45px;
-  bottom: 45px;
+  left: clamp(16px, 6vw, 45px);
+  bottom: clamp(16px, 6vw, 40px);
   z-index: 5;
 }
 
 .address-title {
   font-family: var(--font-serif);
-  font-size: 0.95rem;
+  font-size: clamp(0.78rem, 2.5vw, 0.95rem);
   font-style: italic;
   color: var(--ink-secondary);
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .address-name {
   font-family: var(--font-script);
-  font-size: 2.3rem;
+  font-size: clamp(1.4rem, 4.5vw, 2.3rem);
   color: var(--ink-primary);
   line-height: 1.1;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .address-underline {
-  width: 140px;
+  width: clamp(80px, 25vw, 140px);
   height: 1.5px;
   background: linear-gradient(90deg, var(--gold-primary), transparent);
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 /* Rabat Supérieur 3D (Flap) */
@@ -357,7 +353,7 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 190px;
+  height: 55%;
   transform-origin: top center;
   transform-style: preserve-3d;
   transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
@@ -365,21 +361,17 @@ html, body {
 }
 
 .flap-triangle {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 190px 290px 0 290px;
-  border-color: var(--envelope-outer) transparent transparent transparent;
-  filter: drop-shadow(0 6px 14px rgba(180, 140, 60, 0.15));
+  width: 100%;
+  height: 100%;
   position: relative;
+  background: var(--envelope-outer);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  filter: drop-shadow(0 6px 14px rgba(180, 140, 60, 0.15));
 }
 
 .flap-liner-inner {
   position: absolute;
-  top: -190px;
-  left: -290px;
-  width: 580px;
-  height: 190px;
+  inset: 0;
   background: var(--liner-bg);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   opacity: 0.85;
@@ -388,11 +380,11 @@ html, body {
 /* Cachet de Cire : Or Royal Brillant */
 .wax-seal {
   position: absolute;
-  top: 155px;
+  top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 72px;
-  height: 72px;
+  width: clamp(50px, 12vw, 72px);
+  height: clamp(50px, 12vw, 72px);
   cursor: pointer;
   z-index: 10;
   outline: none;
@@ -421,7 +413,7 @@ html, body {
 
 .seal-ring {
   position: absolute;
-  inset: 7px;
+  inset: 10%;
   border-radius: 50%;
   border: 1.5px dashed rgba(255, 255, 255, 0.75);
 }
@@ -430,8 +422,8 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%);
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(255, 255, 255, 0.6);
@@ -439,7 +431,7 @@ html, body {
 
 .seal-monogram {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.3rem);
   font-weight: 700;
   color: #ffffff;
   text-shadow: 1px 1px 2px rgba(100, 70, 10, 0.8), -1px -1px 1px rgba(255, 255, 255, 0.8);
@@ -447,10 +439,10 @@ html, body {
 
 .seal-glint {
   position: absolute;
-  top: 10px;
-  left: 14px;
-  width: 14px;
-  height: 8px;
+  top: 14%;
+  left: 20%;
+  width: 20%;
+  height: 12%;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.7);
   transform: rotate(-35deg);
@@ -473,7 +465,7 @@ html, body {
 }
 
 .envelope.opening .envelope-card-preview {
-  transform: translateY(-220px);
+  transform: translateY(-55%);
   box-shadow: 0 20px 40px rgba(180, 140, 60, 0.25);
 }
 
@@ -502,7 +494,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: clamp(20px, 4vw, 30px);
   width: 100%;
 }
 
@@ -513,12 +505,12 @@ html, body {
 
 .card-header-badge-wrap .badge-time {
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: clamp(0.78rem, 2.2vw, 0.9rem);
   font-weight: 700;
   color: var(--ink-primary);
   background: #ffffff;
   border: 1.5px solid var(--gold-border);
-  padding: 8px 20px;
+  padding: 7px clamp(14px, 3vw, 20px);
   border-radius: 4px;
   letter-spacing: 0.05em;
   box-shadow: 0 4px 14px rgba(180, 140, 60, 0.15);
@@ -527,7 +519,7 @@ html, body {
 /* Le Carton Unique Blanc & Doré */
 .card-single-wrapper {
   width: 100%;
-  max-width: 640px;
+  max-width: 600px;
   perspective: 1200px;
 }
 
@@ -536,7 +528,7 @@ html, body {
   width: 100%;
   background-color: var(--paper-bg);
   border-radius: var(--card-radius);
-  padding: 28px;
+  padding: clamp(14px, 3.5vw, 28px);
   box-shadow: 
     0 25px 50px rgba(180, 140, 60, 0.22),
     0 0 0 1px rgba(212, 175, 55, 0.35),
@@ -553,19 +545,19 @@ html, body {
   width: 100%;
   border: 1px solid var(--paper-border);
   border-radius: 6px;
-  padding: 10px;
+  padding: clamp(6px, 1.5vw, 10px);
 }
 
 .card-inner-frame {
   width: 100%;
   border: 1.5px solid var(--gold-primary);
   border-radius: 4px;
-  padding: 38px 28px;
+  padding: clamp(24px, 5vw, 38px) clamp(12px, 3.5vw, 28px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 12px;
+  gap: clamp(10px, 2vw, 14px);
   background: #ffffff;
 }
 
@@ -573,9 +565,9 @@ html, body {
 .card-header-ornament {
   display: flex;
   align-items: center;
-  gap: 15px;
-  width: 80%;
-  margin-bottom: 8px;
+  gap: clamp(8px, 2vw, 15px);
+  width: min(85%, 320px);
+  margin-bottom: 4px;
 }
 
 .ornament-line {
@@ -586,39 +578,40 @@ html, body {
 
 .ornament-symbol {
   color: var(--gold-primary);
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
   letter-spacing: 0.2em;
 }
 
 .card-subtitle-small {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: clamp(0.68rem, 2vw, 0.78rem);
   font-weight: 700;
   color: var(--ink-secondary);
-  letter-spacing: 0.25em;
+  letter-spacing: clamp(0.12em, 0.5vw, 0.25em);
   text-transform: uppercase;
+  line-height: 1.4;
 }
 
 .card-milestone {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 10px);
   margin: 2px 0;
 }
 
 .milestone-number {
   font-family: var(--font-serif);
-  font-size: 4.8rem;
+  font-size: clamp(3.4rem, 11vw, 4.8rem);
   font-weight: 300;
-  line-height: 1;
+  line-height: 0.95;
   color: var(--gold-primary);
   text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), -1px -1px 1px rgba(180, 140, 40, 0.2);
 }
 
 .milestone-text {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
   font-weight: 600;
   color: var(--ink-secondary);
   letter-spacing: 0.15em;
@@ -628,19 +621,19 @@ html, body {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 12px;
+  gap: clamp(6px, 2vw, 12px);
   font-family: var(--font-serif);
-  font-size: 3.4rem;
+  font-size: clamp(2.2rem, 7.5vw, 3.4rem);
   font-weight: 600;
   font-style: italic;
-  margin: 2px 0 10px;
+  margin: 2px 0 clamp(6px, 1.5vh, 10px);
   line-height: 1.1;
   letter-spacing: 0.02em;
 }
 
 .title-preposition {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
   font-weight: 600;
   font-style: normal;
   color: var(--ink-secondary);
@@ -659,17 +652,17 @@ html, body {
 
 .card-invitation-message {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
-  line-height: 1.65;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.6;
   color: var(--ink-primary);
-  max-width: 480px;
-  margin: 0 auto 10px;
+  max-width: 460px;
+  margin: 0 auto clamp(4px, 1vh, 8px);
 }
 
 .card-details-divider {
   color: var(--gold-primary);
   font-size: 0.85rem;
-  margin: 6px 0;
+  margin: 4px 0;
   opacity: 0.9;
 }
 
@@ -678,29 +671,29 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
+  gap: clamp(12px, 3vw, 25px);
   width: 100%;
   max-width: 460px;
-  padding: 14px 20px;
+  padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3.5vw, 20px);
   background: #fdfaf4;
   border-radius: 6px;
   border: 1px solid var(--paper-border);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .detail-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
 }
 
 .detail-icon {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2.8vw, 1.15rem);
 }
 
 .detail-label {
-  font-size: 0.68rem;
+  font-size: clamp(0.62rem, 1.8vw, 0.68rem);
   font-weight: 700;
   letter-spacing: 0.18em;
   color: var(--gold-dark);
@@ -708,14 +701,15 @@ html, body {
 
 .detail-val {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: clamp(0.98rem, 3vw, 1.15rem);
   font-weight: 700;
   color: var(--ink-primary);
+  text-align: center;
 }
 
 .detail-separator {
   width: 1px;
-  height: 40px;
+  height: 38px;
   background: var(--gold-border);
   opacity: 0.4;
 }
@@ -725,19 +719,19 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   text-align: center;
   width: 100%;
   max-width: 460px;
-  padding: 14px 22px;
+  padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3.5vw, 22px);
   border-radius: 6px;
   background: #fdfaf4;
   border: 1px solid var(--paper-border);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .location-pin {
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 3vw, 1.35rem);
   flex-shrink: 0;
 }
 
@@ -747,12 +741,13 @@ html, body {
 
 .location-address {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
   font-weight: 600;
   color: var(--ink-primary);
   letter-spacing: 0.02em;
   line-height: 1.35;
   display: block;
+  word-break: break-word;
 }
 
 /* Actions Principales du Carton */
@@ -761,29 +756,31 @@ html, body {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 380px;
-  margin-top: 5px;
+  max-width: 400px;
+  margin-top: 4px;
 }
 
 /* Bouton Principal en Or Royal & Blanc */
 .primary-card-action {
   width: 100%;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 15px 24px;
+  padding: clamp(12px, 3vw, 15px) clamp(14px, 4vw, 24px);
   background: linear-gradient(135deg, #a6791a 0%, #c59b27 50%, #8c6812 100%);
   color: #ffffff;
   border: none;
   border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2.6vw, 0.95rem);
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(197, 155, 39, 0.4);
   transition: var(--transition-smooth);
+  text-align: center;
 }
 
 .primary-card-action:hover {
@@ -795,6 +792,7 @@ html, body {
 .btn-sparkle {
   color: #ffffff;
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -802,8 +800,8 @@ html, body {
    ========================================================================== */
 .interactive-dock {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: clamp(14px, 2.5vw, 20px);
   width: 100%;
   max-width: 950px;
   margin-top: 10px;
@@ -813,12 +811,12 @@ html, body {
   background: var(--paper-bg);
   border: 1px solid var(--paper-border);
   border-radius: 8px;
-  padding: 24px;
+  padding: clamp(18px, 3.5vw, 24px);
   color: var(--ink-primary);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 15px;
+  gap: 14px;
   box-shadow: 0 10px 30px rgba(180, 140, 60, 0.15);
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -837,19 +835,21 @@ html, body {
 
 .dock-icon {
   font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
 .dock-card-header h3 {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: clamp(1.15rem, 3vw, 1.3rem);
   font-weight: 600;
   color: var(--ink-primary);
 }
 
 .dock-card-desc {
-  font-size: 0.88rem;
+  font-size: clamp(0.82rem, 2.2vw, 0.88rem);
   color: var(--ink-secondary);
   line-height: 1.5;
+  word-break: break-word;
 }
 
 /* Compte à rebours */
@@ -857,8 +857,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin: 5px 0;
+  gap: clamp(4px, 1.5vw, 8px);
+  margin: 4px 0;
+  width: 100%;
 }
 
 .time-unit {
@@ -866,31 +867,35 @@ html, body {
   flex-direction: column;
   align-items: center;
   background: #fdfaf4;
-  padding: 8px 12px;
+  padding: clamp(6px, 1.8vw, 8px) clamp(6px, 2vw, 12px);
   border-radius: 6px;
-  min-width: 54px;
+  flex: 1;
+  max-width: 64px;
+  min-width: 44px;
   border: 1px solid var(--gold-border);
 }
 
 .unit-val {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: clamp(1.15rem, 4vw, 1.4rem);
   font-weight: 700;
   color: var(--gold-primary);
+  line-height: 1.1;
 }
 
 .unit-name {
-  font-size: 0.65rem;
+  font-size: clamp(0.58rem, 1.8vw, 0.65rem);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--ink-secondary);
   font-weight: 600;
+  margin-top: 2px;
 }
 
 .time-sep {
   font-weight: 700;
   color: var(--gold-primary);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
 }
 
 /* Boutons calendrier et plan */
@@ -898,6 +903,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
 }
 
 .paper-action-btn {
@@ -905,16 +911,19 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  min-height: 44px;
   padding: 10px 16px;
   background: #ffffff;
   border: 1px solid var(--paper-border);
   border-radius: 4px;
   color: var(--ink-primary);
-  font-size: 0.85rem;
+  font-size: clamp(0.82rem, 2.4vw, 0.88rem);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition: var(--transition-smooth);
+  width: 100%;
+  text-align: center;
 }
 
 .paper-action-btn:hover {
@@ -946,36 +955,37 @@ html, body {
 .guestbook-section {
   width: 100%;
   max-width: 950px;
-  margin-top: 40px;
+  margin-top: clamp(24px, 5vh, 40px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: clamp(16px, 3vh, 25px);
 }
 
 .section-title-wrap {
   text-align: center;
   color: var(--ink-primary);
+  padding: 0 10px;
 }
 
 .section-ornament {
   color: var(--gold-primary);
   font-size: 1.2rem;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .section-title-wrap h2 {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: var(--ink-primary);
 }
 
 .section-title-wrap p {
   color: var(--ink-secondary);
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
 }
 
 .guestbook-paper-card {
@@ -983,7 +993,7 @@ html, body {
   background: var(--paper-bg);
   border: 1px solid var(--paper-border);
   border-radius: 8px;
-  padding: 24px;
+  padding: clamp(16px, 4vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -997,7 +1007,7 @@ html, body {
   border-radius: 4px;
   padding: 12px 16px;
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 16px; /* Empêche le zoom automatique sur iOS Safari */
   color: var(--ink-primary);
   outline: none;
   transition: border-color 0.25s ease;
@@ -1010,13 +1020,16 @@ html, body {
 
 .paper-textarea {
   resize: vertical;
+  min-height: 90px;
 }
 
 .paper-submit-btn {
   align-self: flex-end;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  min-height: 44px;
   padding: 12px 24px;
   background: linear-gradient(135deg, #a6791a 0%, #c59b27 100%);
   color: #ffffff;
@@ -1045,7 +1058,7 @@ html, body {
   background: #ffffff;
   border: 1.5px solid var(--gold-border);
   border-radius: 8px;
-  padding: 30px 24px;
+  padding: clamp(20px, 4vw, 30px) clamp(16px, 4vw, 24px);
   text-align: center;
   color: var(--ink-primary);
   display: flex;
@@ -1056,30 +1069,31 @@ html, body {
 }
 
 .lock-icon-wrap {
-  font-size: 2.2rem;
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
 }
 
 .private-lock-view h3 {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: clamp(1.3rem, 3.5vw, 1.6rem);
   color: var(--ink-primary);
 }
 
 .lock-desc {
   max-width: 520px;
-  font-size: 0.9rem;
+  font-size: clamp(0.82rem, 2.4vw, 0.9rem);
   color: var(--ink-secondary);
   line-height: 1.5;
 }
 
 .unlock-btn {
-  margin-top: 8px;
+  margin-top: 6px;
+  min-height: 44px;
   padding: 10px 20px;
   background: #fdfaf4;
   border: 1px solid var(--gold-border);
   border-radius: 4px;
   color: var(--gold-dark);
-  font-size: 0.88rem;
+  font-size: clamp(0.82rem, 2.4vw, 0.88rem);
   font-weight: 700;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -1094,13 +1108,14 @@ html, body {
 .pin-entry-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(20, 16, 12, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 1100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
 }
 
 .pin-entry-modal.hidden {
@@ -1111,8 +1126,8 @@ html, body {
   background: var(--paper-bg);
   border: 1.5px solid var(--gold-border);
   border-radius: 8px;
-  padding: 30px;
-  max-width: 380px;
+  padding: clamp(20px, 5vw, 30px);
+  max-width: min(92vw, 380px);
   width: 100%;
   text-align: center;
   box-shadow: 0 15px 40px rgba(0,0,0,0.3);
@@ -1120,7 +1135,7 @@ html, body {
 
 .pin-card h4 {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: clamp(1.3rem, 4vw, 1.5rem);
   margin-bottom: 8px;
   color: var(--ink-primary);
 }
@@ -1149,6 +1164,7 @@ html, body {
 
 .pin-submit-btn {
   padding: 10px 18px;
+  min-height: 44px;
   background: linear-gradient(135deg, #a6791a, #c59b27);
   color: #ffffff;
   border: none;
@@ -1161,8 +1177,9 @@ html, body {
   background: none;
   border: none;
   color: var(--ink-secondary);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   cursor: pointer;
+  padding: 6px 12px;
 }
 
 /* Mur déverrouillé */
@@ -1190,18 +1207,19 @@ html, body {
 .guestbook-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
 }
 
 .gb-entry-card {
   background: var(--paper-bg);
   border: 1px solid var(--paper-border);
   border-radius: 6px;
-  padding: 18px;
+  padding: clamp(14px, 3vw, 18px);
   color: var(--ink-primary);
   position: relative;
   box-shadow: 0 4px 14px rgba(180, 140, 60, 0.12);
+  word-break: break-word;
 }
 
 .gb-author {
@@ -1232,13 +1250,14 @@ html, body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(20, 16, 12, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
@@ -1254,10 +1273,11 @@ html, body {
   border: 1.5px solid var(--gold-border);
   border-radius: 10px;
   width: 100%;
-  max-width: 540px;
-  max-height: 90vh;
+  max-width: 520px;
+  max-height: calc(100dvh - 32px);
   overflow-y: auto;
-  padding: 35px 30px;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(24px, 5vw, 35px) clamp(16px, 4vw, 30px);
   position: relative;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
   transform: translateY(20px) scale(0.96);
@@ -1270,16 +1290,20 @@ html, body {
 
 .modal-close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 14px;
+  right: 14px;
   background: #fdfaf4;
   border: 1px solid var(--paper-border);
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--ink-secondary);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
 }
 
 .modal-close-btn:hover {
@@ -1289,7 +1313,7 @@ html, body {
 
 .modal-header {
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .modal-seal-badge {
@@ -1308,20 +1332,20 @@ html, body {
 
 .modal-header h2 {
   font-family: var(--font-serif);
-  font-size: 2.1rem;
+  font-size: clamp(1.6rem, 5vw, 2.1rem);
   color: var(--ink-primary);
   margin-bottom: 6px;
 }
 
 .modal-desc {
-  font-size: 0.88rem;
+  font-size: clamp(0.82rem, 2.2vw, 0.88rem);
   color: var(--ink-secondary);
 }
 
 .msg-composer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .form-group {
@@ -1348,12 +1372,13 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px;
+  min-height: 44px;
+  padding: 10px;
   background: #ffffff;
   border: 1.5px solid var(--paper-border);
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.88rem;
+  font-size: clamp(0.82rem, 2.2vw, 0.88rem);
   color: var(--ink-primary);
   transition: var(--transition-smooth);
 }
@@ -1373,31 +1398,34 @@ html, body {
   background: #fdfaf4;
   border: 1px dashed var(--gold-border);
   border-radius: 6px;
-  padding: 14px;
+  padding: 12px 14px;
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
   font-style: italic;
   line-height: 1.5;
   color: var(--ink-primary);
+  word-break: break-word;
 }
 
 .send-options-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 6px;
+  gap: 10px;
+  margin-top: 4px;
 }
 
 .send-channel-btn {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px;
+  min-height: 48px;
+  padding: 12px 14px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   text-align: left;
   transition: var(--transition-smooth);
+  width: 100%;
 }
 
 .send-channel-btn.sms-btn {
@@ -1423,6 +1451,7 @@ html, body {
 
 .channel-icon {
   font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .channel-text strong {
@@ -1445,6 +1474,7 @@ html, body {
 .copy-msg-btn {
   background: transparent;
   border: 1px dashed var(--paper-border);
+  min-height: 40px;
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 0.82rem;
@@ -1464,13 +1494,13 @@ html, body {
    ========================================================================== */
 .toast-notification {
   position: fixed;
-  bottom: 30px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
   background: #ffffff;
   border: 1.5px solid var(--gold-border);
   color: var(--ink-primary);
-  padding: 12px 24px;
+  padding: 12px 20px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -1481,6 +1511,9 @@ html, body {
   opacity: 0;
   pointer-events: none;
   font-weight: 600;
+  font-size: 0.88rem;
+  max-width: min(90vw, 360px);
+  text-align: center;
 }
 
 .toast-notification.show {
@@ -1499,11 +1532,24 @@ html, body {
 }
 
 /* ==========================================================================
-   11. RESPONSIVE DESIGN (MOBILE & TABLETTE)
+   11. RESPONSIVE DESIGN AVANCÉ (TABLETTE, MOBILE & PETITS ÉCRANS)
    ========================================================================== */
-@media (max-width: 768px) {
+
+/* --- TABLETTES & ÉCRANS MOYENS (<= 820px) --- */
+@media (max-width: 820px) {
   .top-nav {
-    padding: 14px 16px;
+    padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 10px max(12px, env(safe-area-inset-left));
+  }
+
+  .interactive-dock {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* --- MOBILES (<= 600px) --- */
+@media (max-width: 600px) {
+  .top-nav {
+    padding: max(8px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 8px max(10px, env(safe-area-inset-left));
   }
   
   .paper-badge {
@@ -1516,82 +1562,16 @@ html, body {
     font-size: 0.8rem;
   }
 
-  .envelope-wrapper {
-    height: 290px;
-  }
-
-  .envelope-flap {
-    height: 145px;
-  }
-
-  .flap-triangle {
-    border-width: 145px 180px 0 180px;
-  }
-
-  .flap-liner-inner {
-    top: -145px;
-    left: -180px;
-    width: 360px;
-    height: 145px;
-  }
-
-  .envelope-front::before {
-    border-width: 0 180px 160px 180px;
-  }
-
-  .wax-seal {
-    top: 120px;
-    width: 58px;
-    height: 58px;
-  }
-
-  .address-name {
-    font-size: 1.6rem;
-  }
-
-  .envelope-address {
-    left: 20px;
-    bottom: 25px;
-  }
-
-
-  .invitation-card {
-    padding: 18px 12px;
-  }
-
-  .card-inner-frame {
-    padding: 24px 14px;
-  }
-
-  .milestone-number {
-    font-size: 3.6rem;
-  }
-
-  .card-name-title {
-    font-size: 2.5rem;
-    gap: 8px;
-  }
-
-  .title-preposition {
-    font-size: 1.05rem;
-  }
-
-  .card-invitation-message {
-    font-size: 1.05rem;
-  }
-
-  .location-address {
-    font-size: 1.1rem;
-  }
-
   .card-key-details {
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    padding: 12px;
   }
 
   .detail-separator {
     width: 60%;
     height: 1px;
+    margin: 2px 0;
   }
 
   .interactive-dock {
@@ -1600,5 +1580,98 @@ html, body {
 
   .send-options-grid {
     grid-template-columns: 1fr;
+  }
+
+  .paper-submit-btn {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+/* --- TRÈS PETITS MOBILES (<= 360px - iPhone SE, etc.) --- */
+@media (max-width: 360px) {
+  .top-nav {
+    gap: 6px;
+  }
+
+  .paper-badge {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+  }
+
+  .badge-text {
+    display: none; /* Affiche uniquement l'icône ✉️ sur très petit écran */
+  }
+
+  .tactile-btn .btn-label {
+    display: none; /* Affiche uniquement l'icône pour préserver l'espace */
+  }
+
+  .tactile-btn {
+    padding: 8px 10px;
+  }
+
+  .status-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- MODE PAYSAGE SUR MOBILE (<= 520px de haut) --- */
+@media (max-height: 520px) and (orientation: landscape) {
+  .main-scene {
+    padding: 10px 10px 40px;
+  }
+
+  .envelope-wrapper {
+    width: min(70vw, 420px);
+  }
+
+  .paper-modal-card {
+    max-height: 94dvh;
+    padding: 16px 20px;
+  }
+
+  .modal-header {
+    margin-bottom: 12px;
+  }
+}
+
+/* --- ACCESSIBILITÉ : RÉDUCTION DE MOUVEMENT --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- STYLES D'IMPRESSION --- */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .top-nav,
+  .envelope-stage,
+  .interactive-dock,
+  .guestbook-section,
+  .modal-overlay,
+  .table-surface,
+  .toast-notification {
+    display: none !important;
+  }
+
+  .card-stage,
+  .card-stage.hidden {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .invitation-card {
+    box-shadow: none !important;
+    border: 2px solid #000000 !important;
   }
 }
