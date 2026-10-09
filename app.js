@@ -19,8 +19,9 @@ const EventConfig = {
   // Numéro de téléphone pour les confirmations SMS & WhatsApp
   hostPhone: '+33665112038',
 
-  // Code PIN secret pour la boîte à souvenirs
-  hostSecretPin: '2027'
+  // URL de l'application Web Google Apps Script qui stocke les mots (voir apps-script/Code.gs)
+  // Le mot de passe de déverrouillage n'est PAS ici : il est vérifié côté Google.
+  guestbookApiUrl: 'https://script.google.com/macros/s/AKfycbwYFqyaL6nmWvVWT_jVGuReAbV5cdTszmYgaTUnRzzDFXXqqpxryBGNgXGdCN4CiVKn/exec'
 };
 
 // État de l'application
@@ -498,22 +499,34 @@ function initGuestbookPrivate() {
   const unlockedView = document.getElementById('guestbook-unlocked-view');
   const gbGrid = document.getElementById('guestbook-grid');
 
-  // Messages initiaux
-  const initialEntries = [
-    { author: "Sophie & Marc", msg: "18 ans, le plus bel âge ! Tellement hâte de célébrer cette soirée magique avec toi.", time: "Il y a 2 heures" },
-    { author: "Lucas", msg: "J'ai déjà préparé ma meilleure tenue et mes meilleurs pas de danse. Joyeux anniversaire en avance !", time: "Il y a 5 heures" },
-    { author: "Clara", msg: "Un cap inoubliable ! Compte sur nous pour trinquer et faire la fête jusqu'au bout de la nuit.", time: "Hier" }
-  ];
+  let entries = [];
 
-  let entries = JSON.parse(localStorage.getItem('birthday_private_guestbook') || 'null');
-  if (!entries || entries.length === 0) {
-    entries = initialEntries;
-    localStorage.setItem('birthday_private_guestbook', JSON.stringify(entries));
+  // Appel au backend Google Apps Script (text/plain pour éviter le preflight CORS)
+  async function callGuestbookApi(payload) {
+    const res = await fetch(EventConfig.guestbookApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  function formatEntryDate(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return 'Récemment';
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) +
+      ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
   }
 
   function renderUnlockedEntries() {
     if (!gbGrid) return;
     gbGrid.innerHTML = '';
+
+    if (entries.length === 0) {
+      gbGrid.innerHTML = '<p class="gb-msg">Aucun mot pour le moment.</p>';
+      return;
+    }
 
     entries.forEach((entry) => {
       const card = document.createElement('div');
@@ -521,7 +534,7 @@ function initGuestbookPrivate() {
       card.innerHTML = `
         <h4 class="gb-author">${escapeHtml(entry.author)}</h4>
         <p class="gb-msg">${escapeHtml(entry.msg)}</p>
-        <span class="gb-time">${entry.time || 'Récemment'}</span>
+        <span class="gb-time">${escapeHtml(formatEntryDate(entry.date))}</span>
       `;
       gbGrid.appendChild(card);
     });
@@ -529,7 +542,7 @@ function initGuestbookPrivate() {
 
   // Dépôt d'un mot doux
   if (gbSubmitBtn) {
-    gbSubmitBtn.addEventListener('click', () => {
+    gbSubmitBtn.addEventListener('click', async () => {
       const author = gbAuthor.value.trim();
       const msg = gbMessage.value.trim();
 
@@ -538,27 +551,26 @@ function initGuestbookPrivate() {
         return;
       }
 
-      const newEntry = {
-        author,
-        msg,
-        time: "À l'instant"
-      };
+      gbSubmitBtn.disabled = true;
+      try {
+        const result = await callGuestbookApi({ action: 'add', author, msg });
+        if (!result.ok) throw new Error(result.error);
 
-      entries.unshift(newEntry);
-      localStorage.setItem('birthday_private_guestbook', JSON.stringify(entries));
+        gbAuthor.value = '';
+        gbMessage.value = '';
 
-      gbAuthor.value = '';
-      gbMessage.value = '';
-
-      AudioPlayer.playChimeSuccess();
-      launchRealisticConfetti(35);
-      showToast(`💌 Votre mot a été glissé dans la boîte secrète de ${EventConfig.hostName} !`);
-
-      renderUnlockedEntries();
+        AudioPlayer.playChimeSuccess();
+        launchRealisticConfetti(35);
+        showToast(`💌 Votre mot a été glissé dans la boîte secrète de ${EventConfig.hostName} !`);
+      } catch (err) {
+        showToast("❌ Le mot n'a pas pu être envoyé, réessayez dans un instant.");
+      } finally {
+        gbSubmitBtn.disabled = false;
+      }
     });
   }
 
-  // Déverrouillage par code PIN
+  // Déverrouillage par mot de passe (vérifié côté serveur)
   if (unlockTriggerBtn) {
     unlockTriggerBtn.addEventListener('click', () => {
       pinModal.classList.remove('hidden');
@@ -573,18 +585,32 @@ function initGuestbookPrivate() {
     });
   }
 
-  function tryUnlockPin() {
+  async function tryUnlockPin() {
     const entered = pinInput.value.trim();
-    if (entered === EventConfig.hostSecretPin || entered === '2027' || entered === '1234') {
-      pinModal.classList.add('hidden');
-      lockView.style.display = 'none';
-      unlockedView.classList.remove('hidden');
-      renderUnlockedEntries();
-      AudioPlayer.playChimeSuccess();
-      showToast("🔓 Boîte à souvenirs déverrouillée !");
-    } else {
-      showToast("❌ Code PIN incorrect");
-      pinInput.value = '';
+    if (!entered) return;
+
+    pinSubmitBtn.disabled = true;
+    try {
+      const result = await callGuestbookApi({ action: 'read', password: entered });
+      if (result.ok) {
+        entries = result.entries;
+        pinModal.classList.add('hidden');
+        lockView.style.display = 'none';
+        unlockedView.classList.remove('hidden');
+        renderUnlockedEntries();
+        AudioPlayer.playChimeSuccess();
+        showToast("🔓 Boîte à souvenirs déverrouillée !");
+      } else if (result.error === 'locked') {
+        showToast("⏳ Trop d'essais, réessayez dans 15 minutes.");
+        pinInput.value = '';
+      } else {
+        showToast("❌ Mot de passe incorrect");
+        pinInput.value = '';
+      }
+    } catch (err) {
+      showToast("❌ Connexion impossible, réessayez dans un instant.");
+    } finally {
+      pinSubmitBtn.disabled = false;
     }
   }
 
