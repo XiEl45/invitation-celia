@@ -506,10 +506,16 @@ function initGuestbookPrivate() {
     const res = await fetch(EventConfig.guestbookApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      keepalive: true // l'envoi continue même si l'invité ferme la page
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return res.json();
+  }
+
+  // Réveille le script Google dès le chargement pour éviter le démarrage à froid (3-5 s)
+  if (EventConfig.guestbookApiUrl.startsWith('https://')) {
+    callGuestbookApi({ action: 'ping' }).catch(() => {});
   }
 
   function formatEntryDate(iso) {
@@ -551,21 +557,23 @@ function initGuestbookPrivate() {
         return;
       }
 
-      gbSubmitBtn.disabled = true;
+      // Affichage immédiat de la confirmation, l'envoi se fait en arrière-plan
+      gbAuthor.value = '';
+      gbMessage.value = '';
+      AudioPlayer.playChimeSuccess();
+      launchRealisticConfetti(35);
+      showToast(`💌 Votre mot a été glissé dans la boîte secrète de ${EventConfig.hostName} !`);
+
       try {
         const result = await callGuestbookApi({ action: 'add', author, msg });
         if (!result.ok) throw new Error(result.error);
-
-        gbAuthor.value = '';
-        gbMessage.value = '';
-
-        AudioPlayer.playChimeSuccess();
-        launchRealisticConfetti(35);
-        showToast(`💌 Votre mot a été glissé dans la boîte secrète de ${EventConfig.hostName} !`);
       } catch (err) {
+        // Échec : on remet le texte pour que l'invité puisse renvoyer sans tout retaper
+        if (!gbAuthor.value && !gbMessage.value) {
+          gbAuthor.value = author;
+          gbMessage.value = msg;
+        }
         showToast("❌ Le mot n'a pas pu être envoyé, réessayez dans un instant.");
-      } finally {
-        gbSubmitBtn.disabled = false;
       }
     });
   }
@@ -589,7 +597,9 @@ function initGuestbookPrivate() {
     const entered = pinInput.value.trim();
     if (!entered) return;
 
+    const pinBtnLabel = pinSubmitBtn.textContent;
     pinSubmitBtn.disabled = true;
+    pinSubmitBtn.textContent = 'Vérification…';
     try {
       const result = await callGuestbookApi({ action: 'read', password: entered });
       if (result.ok) {
@@ -611,6 +621,7 @@ function initGuestbookPrivate() {
       showToast("❌ Connexion impossible, réessayez dans un instant.");
     } finally {
       pinSubmitBtn.disabled = false;
+      pinSubmitBtn.textContent = pinBtnLabel;
     }
   }
 
