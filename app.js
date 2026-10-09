@@ -15,9 +15,9 @@ const EventConfig = {
   eventTime: 'À partir de 19h30',
   venueAddress: '44 Rue Clovis Joos, 62880 Pont-à-Vendin',
   dressCode: 'Blanc & Doré',
-  
+
   // Numéro de téléphone pour les confirmations SMS & WhatsApp
-  hostPhone: '+33612345678',
+  hostPhone: '+33665112038',
 
   // Code PIN secret pour la boîte à souvenirs
   hostSecretPin: '2027'
@@ -198,7 +198,7 @@ function initEnvelopeCeremony() {
       setTimeout(() => {
         envelopeStage.style.display = 'none';
         cardStage.classList.remove('hidden');
-        
+
         void cardStage.offsetWidth;
         cardStage.classList.add('visible');
         cardStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -258,7 +258,7 @@ function initCardParallax() {
       const rect = cardWrapper.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      
+
       const tiltX = (y / (rect.height / 2)) * -4;
       const tiltY = (x / (rect.width / 2)) * 4;
 
@@ -643,7 +643,7 @@ function initSoundAndToast() {
     });
   }
 
-  window.showToast = function(message) {
+  window.showToast = function (message) {
     const toast = document.getElementById('toast-notification');
     const msgEl = document.getElementById('toast-message');
     if (!toast || !msgEl) return;
